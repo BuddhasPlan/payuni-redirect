@@ -19,7 +19,6 @@ module.exports = function handler(req, res) {
     // ── 組合要加密的參數 ──
     const tradeParams = {
       MerID:     MER_ID,
-      Version:   '1.0',
       TradeNo:   tradeNo,
       Timestamp: Math.floor(Date.now() / 1000).toString(),
       UniAmt:    parseInt(amount),
@@ -69,10 +68,11 @@ module.exports = function handler(req, res) {
   <div class="loader"></div>
   <p>正在跳轉到付款頁面，請稍候...</p>
   <form id="payForm" method="POST" action="${payuniUrl}">
-    <input type="hidden" name="MerID"       value="${MER_ID}">
-    <input type="hidden" name="EncryptInfo" value="${encryptInfo}">
-    <input type="hidden" name="HashInfo"    value="${hashInfo}">
-  </form>
+  <input type="hidden" name="MerID"       value="${MER_ID}">
+  <input type="hidden" name="Version"     value="1.0">
+  <input type="hidden" name="EncryptInfo" value="${encryptInfo}">
+  <input type="hidden" name="HashInfo"    value="${hashInfo}">
+</form>
   <script>
     window.onload = function() { document.getElementById('payForm').submit(); };
   </script>
