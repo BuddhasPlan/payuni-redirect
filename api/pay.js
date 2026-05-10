@@ -36,10 +36,9 @@ module.exports = function handler(req, res) {
 
     const jsonStr = JSON.stringify(tradeParams);
     const encrypted = Buffer.concat([cipher.update(jsonStr, 'utf8'), cipher.final()]);
-    const authTag   = cipher.getAuthTag(); // 16 bytes
-
-    // cipher text + auth tag → base64
-    const encryptInfo = Buffer.concat([encrypted, authTag]).toString('base64');
+cipher.getAuthTag(); // 仍需呼叫，但不納入 EncryptInfo
+// 只傳密文，不含 auth tag（符合 PAYUNi PHP SDK 格式）
+const encryptInfo = encrypted.toString('base64');
 
     // ── HashInfo：SHA256(HashKey + EncryptInfo + HashIV) ──
 const hashInfo = crypto
