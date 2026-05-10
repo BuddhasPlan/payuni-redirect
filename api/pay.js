@@ -41,12 +41,13 @@ module.exports = function handler(req, res) {
     // cipher text + auth tag → base64
     const encryptInfo = Buffer.concat([encrypted, authTag]).toString('base64');
 
-    // ── HashInfo：SHA256(MerID + EncryptInfo + HashKey) ──
-    const hashInfo = crypto
-      .createHash('sha256')
-      .update(MER_ID + encryptInfo + HASH_KEY)
-      .digest('hex')
-      .toUpperCase();
+    // ── HashInfo：SHA256(HashKey + EncryptInfo + HashIV) ──
+const hashInfo = crypto
+  .createHash('sha256')
+  .update(HASH_KEY + encryptInfo + HASH_IV)
+  .digest('hex')
+  .toUpperCase();
+     
 
     // ── 回傳自動提交的 HTML 表單 ──
     const payuniUrl = 'https://api.payuni.com.tw/api/upp';
