@@ -19,6 +19,7 @@ module.exports = function handler(req, res) {
     // ── 組合要加密的參數 ──
     const tradeParams = {
       MerID:     MER_ID,
+      Version:   '1.0',
       TradeNo:   tradeNo,
       Timestamp: Math.floor(Date.now() / 1000).toString(),
       UniAmt:    parseInt(amount),
